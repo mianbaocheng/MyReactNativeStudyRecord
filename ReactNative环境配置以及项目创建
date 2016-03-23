@@ -1,0 +1,21 @@
+mac环境下配置ReactNative步骤：
+ Android
+  1)install Homebrew
+  2)install Node.js
+  3)nvm install node && nvm alias default node
+  4)brew install watchman
+  5)brew install flow
+  为了安装的是最新的版本在之前可以运行如下命令：brew update && brew upgrade
+  6)npm install -g react-native-cli
+  
+  
+创建ReactNative项目的步骤：
+ 1）打开终端，cd到指定的存放项目的目录下
+ 2）输入react-native init MyFirstReactNativePro(MyFirstReactNativePro:为项目的名称)，等待下载完成
+    如果下载不行：执行下面的命令(vi ~/.npmrc) 加入registry=https://registry.npm.taobao.org
+  3)使用开发工具导入android项目，主要是生成local.xml(是的sdk关联)
+  4)终端输入react-native run-android 运行项目
+  5)运行项目的前提(1.无线网络要统一，2.要有应用弹框的权限)
+
+
+  
