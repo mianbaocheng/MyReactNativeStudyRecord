@@ -1,0 +1,15 @@
+1)Image可以加载三类图片：
+  a)加载目录中的图片
+    在项目MyFirstReactNativePro目录下创建一个img文件，在img文件下放置一张my_people.png图片，访问该图片
+      <Image source={require('./img/my_people.png')} />就可以访问到本地的图片
+    访问图片的资源文件的查找和js模块相似，会根据填写的图片路径相对于当前的js文件路径进行搜索。
+    RN更加好的是Packager会根据平台选择相应的文件，例如：my_people.ios.png和my_people.android.png两个文件
+    (命名方式android或者ios)，该会根据android或者ios平台选择相应的文件。Ios可以设置@2x等图片(图片格式只要
+    变成这样my_people@2x.png,my_people@3x.png)这样Packager会根据屏幕密度进行选择图片，没有，则选择最接近的
+    
+    注意：require中的图片名称必须为一个静态的字符串信息，不能在require中进行拼接。如：
+      <Image source={require('./img/my_poeple'+'.png')} 运行报错：Requiring unknown module.......
+      
+      
+  b)加载使用App中的图片
+    
