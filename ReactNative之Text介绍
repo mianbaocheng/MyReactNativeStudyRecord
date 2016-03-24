@@ -1,0 +1,121 @@
+1.该组件为React中的一个基本组件，该和Android中的TextView组件类似用来显示基本的文本信息，该控件除了基本的显示布局外，
+  可以进行嵌套显示，设置样式，以及做事件（如：点击）处理。下面我们做一个事例：
+  /*****************coding********************/
+  /**
+ * 进行简单Text组件使用实例
+ * author chengbo
+ * create time 2016/03/24 14:50
+ */
+
+import React, {
+    AppRegistry,
+    Component,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+
+class MyFirstReactNativePro extends Component {
+    render() {
+        return (
+            <View>
+                <Text style={styles.titleBase}>
+                    I am root text!
+                    <Text>
+                        I am child text!
+                    </Text>
+                </Text>
+                <Text style={styles.titleBase}>
+                    I am root text!
+                    <Text style={styles.title}>
+                        I am child text!
+                    </Text>
+                </Text>
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    titleBase: {
+        margin: 10,
+        textAlign: 'center',
+        color: 'red',
+        fontSize: 28,
+        fontFamily: 'Cochin',
+    },
+    title: {
+        color: 'green',
+        fontWeight: 'bold',
+    },
+});
+
+AppRegistry.registerComponent('MyFirstReactNativePro', () => MyFirstReactNativePro);
+
+上述事例采用了Text的嵌套的方式，最外层的Text的Style titleBase定义相关风格，内层的风格Style title定义的相关风格，
+我们可以看到运行效果，如果内层没有重写外层定义的样式，那么内层会进行继承。如果重写了样式，那么内层会根据自己定义
+的样式进行渲染，该和css样式表差不多。
+上面的事例主要定义了布局，字体大小，字体风格，颜色等相关样式。
+
+
+2.Text属性方法（主要一些可用的属性）
+  a).allowFontScalling(bool):控制字体是否根据ios的设置进行自动缩放，android平台不适用
+  b).numberOfLines(number):进行设置Text显示文本的行数，如果显示的内容超过了行数，默认其他多余的信息就不会显示了。
+  c).onLayout(function):当布局位置发生变化的时候自动进行触发该方法，其中该function的参数如下：
+    {natvieEvent:{layout:{x,y,width,height}}}
+  d).onPress(function)该方法当文本发生点击的时候调用方法
+  
+3.风格样式
+  1.继承可以使用view组件的所有style（http://facebook.github.io/react-native/docs/view.html#style)
+  2.color:字体颜色
+  3.fontFamily:字体名称
+  4.fontSize:字体大小
+  5.fontStyle:字体风格（normal，italic）
+  6.fontWeight:字体粗重权重（"normal","bold","100","200","300","400","500","600","700","800","900"）
+  7.textShadowOffset:设置阴影效果{width:number,height:number}
+  8.textShadowRadius:阴影效果圆角
+  9.textShadowColor:阴影效果的颜色
+  10.letterSpacing:字符间距
+  11.lineHeight:行高
+  12.textAlign:文本对齐方式("auto","left","right","center","justify")
+  13.textDecorationLine 横线位置（“none”，“underline”，“line-through”,"underline line-through"）
+  14.textDecorationStyle:线的风格（"solid","double","dotted","dashed"）
+  15.textDecorationColor:线的颜色
+  16.writingDirection:文本的方向（auto，ltr,rtl）
+
+  经过测试发现：textDecorationLine,textDecorationStyle,textDecorationColor,writingDirection这几个属性在android机器上面没有效果
+
+4.嵌套的特点:和web上面一致的设计方案，我们通过嵌套包裹的方案，相同的属性的文本可以用父标签进行包裹,然后内部特殊的文本采用子标签方案，
+  具体如下：
+    <Text style={{fontWeight:'bold',fontSize:28}}>
+      I am bold
+      <Text style={{color:'red'}}>
+        and red
+      </Text>
+    </Text>
+    
+5.容器布局规则
+  之前我们介绍View组件，我们知道该组件是支持FlexBox(弹性布局)，但是Text组件直接是文本布局的，也就是说一个Text接着Text横向，
+  如果文本到末尾了，那就直接换行
+
+6.样式继承规则
+  组件嵌套，父组件定义了相关样式，如果子控件没有重写样式的话，那么该子组件会继承父组件定义的样式
+  
+7.属性的运用事例
+/*********coding************/
+  <Text style={{color:'red'}}>My Text one 红色. </Text>
+  <Text style={{color:'green',fontSize:20}}>My Text two 绿色和字体大小</Text>
+  <Text style={{color:'green',fontFamily:'Cochin'}}>My Text Three 绿色字体和字体名称</Text>
+  <Text style={{color:'pink',fontWeight:'bold'}}>My Text Four 粉色与加粗</Text>
+  <Text style={{color:'gray',fontStyle:'italic'}}>My Text five 灰色和斜体</Text>
+  <Text style={{textAlign:'center',fontStyle:'italic'}}>My Text six 居中和斜体</Text>
+  <Text style={{marginLeft:10,marginTop:10,textAlign:'center',fontStyle:'italic'}}>设置文本的间距,距左,距顶部10</Text>
+  <Text style={{textAlign:'center',fontStyle:'italic'}} numberOfLines={1} >测试行数My Text six 居中和斜体My Text
+        six 居中和斜体My Text six 居中和斜体My Text six 居中和斜体</Text>
+  <Text numberOfLines={2} style={{lineHeight:40,textAlign:'center',fontStyle:'italic'}}>测试行高测试行高测试行高测试行高测试行高
+        测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高
+        测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高测试行高
+        测试行高测试行高测试行高测试行高测试行高
+        测试行高测试行高测试行高测试行高测试行高测试行高测试行高
+        测试行高测试行高测试行高测试行高测试行高测试行高
+  </Text>
