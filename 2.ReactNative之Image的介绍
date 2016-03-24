@@ -8,8 +8,154 @@
     变成这样my_people@2x.png,my_people@3x.png)这样Packager会根据屏幕密度进行选择图片，没有，则选择最接近的
     
     注意：require中的图片名称必须为一个静态的字符串信息，不能在require中进行拼接。如：
-      <Image source={require('./img/my_poeple'+'.png')} 运行报错：Requiring unknown module.......
+      <Image source={require('./img/my_people'+'.png')} 运行报错：Requiring unknown module.......
       
       
-  b)加载使用App中的图片
+  b)加载使用App中的图片:
+    使用ReactNative可以进行混合开发App，可以使用打包在App中的图片资源(例如：xcode asset文件夹以及Android Drawable文件夹)。
+      <Image source={{uri:'my_people'}} style={{width:50,height:50}} />
+    不过如果想要显示效果：作如下修改，因为现在android项目采用gradle，现在不会默认生成Drawable文件夹中了，所以大家如果想演
+    示效果需要在res下面创建一个Drawable文件夹，然后放一个图片进入，接着再重新打包运行即可（经测试发现也可以放在
+    Drawable-hdpi文件中也可以运行）
+    该适用于调试版本，如果采用发布版本就需要例如'image!xx.png'格式的访问方式了
+    
+  c)加载网络图片
+    网络图片加载的时候必要指定图片的大小尺寸
+      <Image source={{uri:'http://img2.imgtn.bdimg.com/it/u=1457437487,655486635&fm=11&gp=0.jpg'}} style={{width:10,height:10}} />
+      
+  
+2）Image实现某些控件背景图效果
+    ReactNative中支持嵌套的方式，例如我们现在有一个Text组件，加入要实现背景图的效果，那么可以使用Image嵌套的Text的方式，然后Image
+    加载图片的方式。
+      <Image source={require('./img/ic_people.png')}>
+        <Text style={{color:'#ff0000'}}>下面是背景图片</Text>
+      </Image>
+      
+3)Image属性方法
+  a).onLayout（function）当Iamge布局发生变化，会进行该方法的调用，调用代码为：
+    {nativeEvent:{layout:{x,y,width,height}}}
+  b).onLoad(function):当图片加载成功之后，回调该方法
+  c).onLoadEnd(function):当图片加载完成会回调该方法，该不会管图片加载成功还是失败
+  d).onLoadStart(function):当图片开始加载的时候用该方法
+  e).resizeMode:缩放比列，可选参数（‘conver’,'contain','stretch'）该图片的尺寸超过布局的尺寸的时候，会根据设置的Mode进行
+    缩放或者裁剪图片
+    
+    
+4)Image样式风格
+  a)FlexBox 支持弹性盒子风格
+  b)Transforms 支持属性动画
+  c)resizeMode 设置缩放模式
+  d)backgroundColor 背景颜色
+  e)borderColor 边框颜色
+  f)borderWidth 边框宽度
+  g)borderRadius 边框圆角
+  h)overflow 设置图片尺寸超过容器可以设置显示或者隐藏（‘visible’,'hidden'）
+  i)tintColor 颜色设置
+  j)opacity 设置不透明度0.0（透明）------1.0（完全不透明）
+  
+  
+5）Image事例---仿照美团顶部分类代码：
+/**************coding*******************/
+/**
+ * 仿照美团顶部事例
+ * author chengbo
+ * create time 2016/03/24 10:23
+ */
+
+'use strict'
+var React = require('react-native');
+var {
+    AppRegistry,
+    StyleSheet,
+    Image,
+    Text,
+    View,
+    Component
+}=React;
+
+class MyFirstReactNativePro extends Component {
+    render() {
+        return (
+            <View style={styles.outer}>
+                <View style={styles.horStyle}>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_0.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>美食</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_1.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>电影</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_2.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>酒店</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_3.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>悠闲娱乐</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_4.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>外卖</Text>
+                    </View>
+                </View>
+                <View style={[styles.horStyle,{marginTop:15}]}>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_5.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>自助餐</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_6.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>KTV</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_7.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>火车票机票</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_8.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>丽人</Text>
+                    </View>
+                    <View style={styles.itemStyle}>
+                        <Image source={require('./img/ic_category_9.png')} style={styles.imgStyle}/>
+                        <Text style={styles.textStyle}>周边游</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+}
+
+
+var styles = StyleSheet.create({
+    outer: {
+        marginLeft: 10,
+        marginTop: 10
+    },
+
+    horStyle: {
+        flexDirection: 'row'
+    },
+
+    itemStyle: {
+        width: 70,
+    },
+
+    imgStyle: {
+        alignSelf: 'center',
+        width: 45,
+        height: 45
+    },
+
+    textStyle: {
+        marginTop: 5,
+        textAlign: 'center',
+        fontSize: 11,
+        color: '#555555'
+    },
+});
+
+
+AppRegistry.registerComponent('MyFirstReactNativePro', ()=>MyFirstReactNativePro);
+
     
