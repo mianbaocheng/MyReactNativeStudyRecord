@@ -1,1 +1,32 @@
-
+TextInput组件简介：
+  允许用户在应用中通过键盘进行输入文本信息。该组件还提供了多种配置属性例如:(边框的颜色，粗细，背景，默认值)
+  以及监听方法(输入信息，交点变化等事件)。
+    <TextInput style={{height:40,borderColor:'gray',borderWidth:1}} onChangeText={(text)=>this.state({text})} value={this.state.text} />
+  该事例定义了一个TextInput组件，同时设置组件的风格，高度，边框的粗细以及边框的颜色,并且我们坚挺了TextInput的onChangeText的事件来进行获取
+  用户的输入信息。该加你太难过事件方法还有onSubmitEditing(提交编辑)以及onFoucs（输入框获取焦点的时候调用）等相关的监听方法。
+  
+  2.下面演示一个TextInput事例
+    创建三个TextInput，同时每个TextInput都添加了默认信息（hit）,第一个TextInput组件设置高度40，边框粗细和边框的颜色，切可以多行输入信息。
+    第二个TextInput设置左右边距以及自动获取到焦点。第三个TextInput设置不可编辑状态。
+    View style="{styes.container}">
+                <Text style={styles.welcome}>
+                    Welcome to React Native
+                </Text>
+                <TextInput style={{height:40,borderColor:'red',borderWidth:1}} multiline={true} defaultValue='默认信息1'/>
+                <TextInput style={{marginLeft:10,marginRight:10}} autoFocus={true} defaultValue='默认信息2'/>
+                <TextInput editable={false} defaultValue='默认信息3'/>
+    </View>
+    
+  3.属性方法(这边讲解平台公用以及Android生效的属性方法)
+    a).View 支持view的相关属性
+    b).autoCapitalize 控制TextInput输入的字符进行切换成大写（可选择参数：'none','sentences','words','characters'）
+      'none'：不自动切换任何字符成大写
+      'sentences'：默认每句的首字母变成大写
+      'words'：每个单词的首字母变成大写
+      'characters':每个字母全部变成大写
+    c).autoCorrect bool 设置拼写自动修正功能 默认为开启
+    d).autoFocus bool 设置是否默认获取交点 默认是关闭(false).该需要componnentDidMount方法被调用之后才会获取焦点（componentDidMount）是
+      Rect组件被渲染之后React主动回调的方法
+    e).defaultValue string 给文本输入设置一个默认值
+    f).editable bool 设置文本框是否可以编辑 默认值为true，可进行编辑
+    g).keyboardType 键盘类型(可选参数：'default','email-address','numeric','phone-pad','ascii')
